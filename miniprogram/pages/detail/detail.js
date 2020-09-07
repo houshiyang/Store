@@ -1,14 +1,17 @@
-// pages/home/home.js
-const db = wx.cloud.database({
-  env: "cloud-demo-2qtck" //环境ID，使用云端数据
-})
-
+// pages/detail/detail.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    product: {
+      id: 2,
+      image: 'cloud://cloud-demo-2qtck.636c-cloud-demo-2qtck-1302904475/products/product2.jpg',
+      name: 'Guitar',
+      price: 480.50,
+      source: 'SWEDEN'
+    }
 
   },
 
@@ -16,27 +19,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getProductList()
-  },
 
-  getProductList() { //调用云数据库中的数据
-    wx.showLoading({
-      title: 'Loading...' //数据加载的提示
-    })
-    db.collection("product").get().then(result => { //???
-      console.log(result)
-      wx.hideLoading()
-      const data = result.data
-      data.forEach(product => product.price = parseFloat(Math.round(product.price * 100) / 100).toFixed(2)) //???
-      if (data.length) {
-        this.setData({
-          productList: data
-        })
-      }
-    }).catch(err => { //???
-      console.error(err)
-      wx.hideLoading()
-    })
   },
 
   /**
