@@ -1,36 +1,31 @@
 // pages/home/home.js
-const db = wx.cloud.database({
-  env: "cloud-demo-2qtck" //环境ID，使用云端数据
-})
+const db = require('../../utils/db') //引用封装的云开发功能
+
+const util = require("../../utils/util") //引用封装的保留两位小数功能
 
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-
+    productList: [],
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
     this.getProductList()
   },
 
   getProductList() { //调用云数据库中的数据
     wx.showLoading({
-      title: 'Loading...' //数据加载的提示
+      title: 'Loading...'
     })
-    db.collection("product").get().then(result => { //???
-      console.log(result)
+
+    db.getProductList().then(result => { //??
       wx.hideLoading()
-      const data = result.data
-      data.forEach(product => product.price = parseFloat(Math.round(product.price * 100) / 100).toFixed(2)) //???
-      if (data.length) {
+
+      const productList = result.data
+      productList.forEach(product => product.price = util.formatPrice(product.price)) //???
+      
+      if (productList.length) {
         this.setData({
-          productList: data
+          productList
         })
       }
     }).catch(err => { //???
@@ -38,53 +33,4 @@ Page({
       wx.hideLoading()
     })
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })
