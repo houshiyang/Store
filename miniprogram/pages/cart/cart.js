@@ -8,7 +8,8 @@ Page({
    */
   data: {
     userInfo: null,
-    cartList: [{
+    cartList: [
+    /*  {
       id: 1,
       image: 'https://s3.cn-north-1.amazonaws.com.cn/u-img/product1.jpg',
       name: 'Wallet',
@@ -43,7 +44,8 @@ Page({
       price: '500.00',
       source: 'USA',
       count: 1,
-    }],
+    }
+  */],
     isSelectAllChecked: false,
     isCartEdit: false,
     cartCheckMap: {},

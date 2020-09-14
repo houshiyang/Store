@@ -51,4 +51,20 @@ module.exports = {
         return {}
       })
   },
+
+  addToCart(data) {
+    return util.isAuthenticated() //检查用户时候授权
+    .then(() => {
+      return wx.cloud.callFunction({ //调用addToCart云函数
+        name: 'addToCart',
+        data,
+      })
+    }).catch(() => {
+      wx.showToast({
+        icon: 'none',
+        title: 'Please Login First'
+      })
+      return {}
+    })
+  },
 }
