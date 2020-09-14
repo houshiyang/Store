@@ -67,4 +67,20 @@ module.exports = {
       return {}
     })
   },
+
+  getCart() {
+    return util.isAuthenticated()
+      .then(() => {
+        return wx.cloud.callFunction({
+          name: 'getCart',
+      })
+      }).catch(() => {
+        wx.showToast({
+          icon: 'none',
+          title: 'Please Login First'
+        })
+        return {}
+      })
+  },
+  
 }

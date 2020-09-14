@@ -61,7 +61,7 @@ Page({
 
     db.getOrders().then(result => { //调用db中的getOrder函数
       wx.hideLoading()
-
+      console.log('order_result', result)
       const data = result.result
 
       if (data) { //检查订单数据

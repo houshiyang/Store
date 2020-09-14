@@ -18,7 +18,7 @@ exports.main = async (event, context) => {
   const cartList = cartRes.data
 
   if (!cartList.length) {
-    await db.collection('cart').add({
+    await db.collection('cart').add({ //点击加入购物车，商品信息加入数据库
       data: {
         productId,
         count: 1,
