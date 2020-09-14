@@ -35,4 +35,20 @@ module.exports = {
       })
     
   },
+
+  getOrders() {
+    return util.isAuthenticated() //检查用户时候授权
+      .then(() => {
+        return wx.cloud.callFunction({ //调用getOrders云函数
+          name: 'getOrders',
+        })
+      })
+      .catch(() => {
+        wx.showToast({
+          icon: 'none',
+          title: 'Please Login First'
+        })
+        return {}
+      })
+  },
 }
