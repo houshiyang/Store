@@ -117,9 +117,13 @@ Page({
   },
 
   onTapEditCart() {
-    this.setData({
-      isCartEdit: !this.data.isCartEdit
-    })
+    if (!this.data.isCartEdit) {
+      this.setData({
+        isCartEdit: true
+      })
+    } else {
+      this.updateCart() 
+    }
   },
 
   adjustCartProductCount(event) {
@@ -148,5 +152,37 @@ Page({
       cartList,
     })
 
+    if (!cartList.length) {
+      this.updateCart()
+    }
+
+  },
+
+  updateCart() {
+    wx.showLoading({
+      title: 'Loading...',
+    })
+
+    const cartList = this.data.cartList
+
+    db.updateCart(cartList).then(result => {
+      wx.hideLoading()
+
+      const data = result.result
+
+      if (data) {
+        this.setData({
+          isCartEdit: false
+        })
+      }
+    }).catch(err => {
+      console.error(err)
+      wx.hideLoading()
+
+      wx.showToast({
+        icon: 'none',
+        title: 'Failed'
+      })
+    })
   },
 })
