@@ -72,6 +72,8 @@ Page({
       this.setData({
         userInfo
       })
+    }).catch(err => {
+      console.log("Not Authenticated yet")
     })
     this.data.orderList.forEach(order => {
       order.productList.forEach(product => product.price = util.formatPrice(product.price))
@@ -79,6 +81,7 @@ Page({
     this.setData({
       orderList: this.data.orderList
   })
+
   },
 
   /**
