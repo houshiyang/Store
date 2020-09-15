@@ -55,32 +55,35 @@ Page({
       title: 'Submiting...'
     })
 
-    db.addReview({
-      username: this.data.userInfo.nickName,
-      avatar: this.data.userInfo.avatarUrl,
-      content,
-      productId: this.data.product.productId
-    }).then(result => {
-      wx.hideLoading()
+    this.uploadImage(images => {
+      db.addReview({
+        username: this.data.userInfo.nickName,
+        avatar: this.data.userInfo.avatarUrl,
+        content,
+        productId: this.data.product.productId,
+        images,
+      }).then(result => {
+        wx.hideLoading()
 
-      const data = result.result
+        const data = result.result
 
-      if (data) {
+        if (data) {
+          wx.showToast({
+            title: 'Succeed'
+          })
+
+          setTimeout(() => {
+            wx.navigateBack()
+          }, 1500)
+        }
+      }).catch(err => {
+        console.error(err)
+        wx.hideLoading()
+
         wx.showToast({
-          title: 'Succeed'
+          icon: 'none',
+          title: 'Failed'
         })
-
-        setTimeout(() => {
-          wx.navigateBack() //调用成功后退回到订单页面
-        }, 1500)
-      }
-    }).catch(err => {
-      console.error(err)
-      wx.hideLoading()
-
-      wx.showToast({
-        icon: 'none',
-        title: 'Failed'
       })
     })
   },
@@ -106,6 +109,27 @@ Page({
       current: src,
       urls: [src]
     })
+  },
+
+  uploadImage(callback) {
+    const previewImages = this.data.previewImages //路径列表
+    const images = [] //存储图像id
+
+    if (previewImages.length) {
+      let imageCount = previewImages.length
+      for (let i = 0; i < imageCount; i++) { //遍历图像的地址
+        db.uploadImage(previewImages[i]).then(result => {
+          images.push(result.fileID) //将图像ID放在images列表中
+          if (i === imageCount - 1) {
+            callback && callback(images)
+          }
+        }).catch(err => {
+          console.log('err', err)
+        })
+      }
+    } else {
+      callback && callback(images)
+    }
   },
 
   /**

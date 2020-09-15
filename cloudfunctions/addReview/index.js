@@ -18,6 +18,7 @@ exports.main = async (event, context) => {
       content: event.content,
       productId: event.productId,
       createTime: +new Date(),
+      images: (event.images || []).join(';'), //将不同的图像云存储地址用分号连接，用以区别不同的图像云存储地址
     },
   })
 

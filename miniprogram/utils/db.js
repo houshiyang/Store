@@ -122,5 +122,12 @@ module.exports = {
       productId,
     }).get()
   },
+
+  uploadImage(imgPath) {
+    return wx.cloud.uploadFile({
+      cloudPath: `review/${util.getId()}`, //云文件存储地址：review/随机id
+      filePath: imgPath,
+    })
+  },
   
 }
