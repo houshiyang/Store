@@ -1,4 +1,7 @@
 // pages/review/review.js
+const db = require("../../utils/db")
+const util = require("../../utils/util")
+
 Page({
 
   /**
@@ -6,18 +9,7 @@ Page({
    */
   data: {
     product:{},
-    reviewList: [{
-      avatar: '/images/me-sel.png',
-      username: 'test1',
-      createTime: '2019/01/01',
-      content: 'test comment',
-    },
-    {
-      avatar: '/images/me-sel.png',
-      username: 'test2',
-      createTime: '2019/01/01',
-      content: 'test comment'
-    }],
+    reviewList: [],
 
   },
 
@@ -26,6 +18,7 @@ Page({
    */
   onLoad: function (options) {
     this.setProduct(options)
+    this.getReviews(options.productId)
   },
 
   setProduct(options) {
@@ -37,6 +30,22 @@ Page({
     }
     this.setData({
       product,
+    })
+  },
+
+  getReviews(productId) {
+    db.getReviews(productId).then(result => {
+      const data = result.data
+      if (data.length) {
+        this.setData({
+          reviewList: data.map(review => {
+            review.createTime = util.formatTime(review.createTime, 'yyyy/MM/dd')
+            return review
+          })
+        })
+      }
+    }).catch(err => {
+      console.error(err)
     })
   },
 
