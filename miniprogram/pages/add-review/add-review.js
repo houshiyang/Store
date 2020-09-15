@@ -11,6 +11,7 @@ Page({
     product: {},
     reviewContent: '',
     userInfo: null,
+    previewImages: [],
   },
 
   /**
@@ -81,6 +82,29 @@ Page({
         icon: 'none',
         title: 'Failed'
       })
+    })
+  },
+
+  chooseImage() {
+    wx.chooseImage({
+      count: 3,
+      sizeType: ['compressed'],
+      sourceType: ['album', 'camera'],
+      success: res => {
+        this.setData({
+          previewImages: res.tempFilePaths
+        })
+      }
+    })
+  },
+
+  previewImage(event) {
+    const target = event.currentTarget
+    const src = target.dataset.src
+
+    wx.previewImage({
+      current: src,
+      urls: [src]
     })
   },
 
