@@ -81,6 +81,13 @@
 					"id": -1,
 					"name": "cart",
 					"pathName": "pages/cart/cart",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "add-review",
+					"pathName": "pages/add-review/add-review",
 					"scene": null
 				}
 			]
