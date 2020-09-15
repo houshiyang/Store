@@ -5,11 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    product:{
-      image: 'https://s3.cn-north-1.amazonaws.com.cn/u-img/product1.jpg',
-      name: 'Product 1',
-      price: '50.50',
-    },
+    product:{},
     reviewList: [{
       avatar: '/images/me-sel.png',
       username: 'test1',
@@ -29,7 +25,19 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.setProduct(options)
+  },
 
+  setProduct(options) {
+    let product = {
+      productId: options.productId,
+      name: options.name,
+      price: options.price,
+      image: options.image
+    }
+    this.setData({
+      product,
+    })
   },
 
   /**
