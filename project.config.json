@@ -95,6 +95,13 @@
 					"id": -1,
 					"name": "order",
 					"pathName": "pages/order/order",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "review",
+					"pathName": "pages/review/review",
 					"scene": null
 				}
 			]
