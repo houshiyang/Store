@@ -49,6 +49,16 @@ Page({
     })
   },
 
+  previewImage(event) {
+    let target = event.currentTarget
+    let src = target.dataset.src
+
+    wx.previewImage({
+      current: src,
+      urls: [src]
+    })
+  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
